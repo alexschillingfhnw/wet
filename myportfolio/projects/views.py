@@ -30,3 +30,11 @@ def contact(request):
         form = ContactForm()
     return render(request, 'projects/contact.html', {'form': form})
 
+
+def search_results(request):
+    query = request.GET.get('q', '')
+    if query:
+        projects = Project.search(query)
+    else:
+        projects = Project.objects.none()  # Returns an empty queryset
+    return render(request, 'projects/search_results.html', {'projects': projects})
